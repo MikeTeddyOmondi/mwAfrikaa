@@ -53,7 +53,8 @@ app.use(passport.session());
 app.use(flash());
 
 // Other middleware
-app.use(express.urlencoded({ extended: false}))
+//app.use(express.urlencoded({ extended: false}))
+app.use('/assets', express.static('assets'))
 app.use(methodOverride('_method'))
 
 // Global variables
@@ -74,7 +75,7 @@ app.use('/articles', articleRouter)
 //     res.render('articles/index', { articles: articles })
 // })
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 8008;
 
 app.listen(PORT, (err) => {
     if(!err){
@@ -86,29 +87,3 @@ app.listen(PORT, (err) => {
         console.log(`___________________________________________________________`)
     }
 })
-
-
-
-
-
-
-
-
-
-
-// code from blog
-
-// mongoose.connect('mongodb://localhost/blog', { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true }, (err) => {
-//     if(!err){
-//         console.log('_________________________________________')
-//         console.log('Database server connection initiated...')
-//         console.log('Database server connection success...')
-//         console.log('_________________________________________')
-//     } else{
-//         console.log(`__________________________________________`)
-//         console.log(`Error : ${err}`)
-//         console.log(`__________________________________________`)
-//     }
-// })
-
-

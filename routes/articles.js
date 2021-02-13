@@ -1,5 +1,6 @@
 const express = require('express')
 const Article = require('./../models/article')
+const Trash = require('../models/Trash')
 const { ensureAuthenticated, forwardAuthenticated } = require('../config/auth');
 const router = express.Router()
 
@@ -29,9 +30,22 @@ router.put('/:id', ensureAuthenticated, async (req, res, next) => {
 }, saveArticleAndRedirect('edit'))
 
 
-router.delete('/:id', ensureAuthenticated, async (req,res) => {
-    await Article.findByIdAndDelete(req.params.id)
-    res.redirect('/')
+router.delete('/:id', ensureAuthenticated, async (req, res, next) => {    
+    let article = await Article.findById(req.params.id)
+    try{
+        let articleToTrash = new Trash({
+            _id: article._id,
+            createdAt: article.createdAt,
+            title: article.title,
+            description: article.description,
+            markdown: article.markdown
+        })
+        await articleToTrash.save()
+        await Article.findByIdAndDelete(article)
+        res.redirect('/')
+    } catch (e){
+        console.log(`Error occured while deleting the article:${e}`)
+    }
 })
 
 function saveArticleAndRedirect(path) {
