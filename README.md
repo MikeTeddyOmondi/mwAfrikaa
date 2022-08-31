@@ -9,5 +9,5 @@
 3. Passport module 
 
 
-Developed: Mike T. Omondi | Rancko Solutions Inc.
+Developed: Mike T. Omondi | Rancko Solutions Ltd.
 
